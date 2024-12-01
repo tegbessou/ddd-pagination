@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
-class ProductPrice
+final readonly class ProductPrice
 {
+    public function __construct(
+        private float $value,
+    ) {
+    }
 
+    public function value(): float
+    {
+        return $this->value;
+    }
 }

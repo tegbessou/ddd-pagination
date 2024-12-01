@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Query;
 
-use App\Domain\Entity\Product;
-use App\Domain\Repository\ProductRepository;
-use App\Domain\ValueObject\ProductName;
+use App\Infrastructure\Adapter\ProductAdapterInterface;
+use App\Infrastructure\ReadModel\Product;
 
 final readonly class ListProductsWithNameQueryHandler
 {
     public function __construct(
-        private ProductRepository $productRepository
+        private ProductAdapterInterface $productAdapter
     ) {}
 
     /**
@@ -19,8 +18,8 @@ final readonly class ListProductsWithNameQueryHandler
      */
     public function __invoke(ListProductsWithNameQuery $query): array
     {
-        return $this->productRepository->getProductsWithName(
-            ProductName::fromString($query->name),
+        return $this->productAdapter->getProductsWithName(
+            $query->name,
             $query->itemPerPage,
             $query->page
         );
